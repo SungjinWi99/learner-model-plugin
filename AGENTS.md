@@ -12,7 +12,7 @@ Python 3. **런타임은 표준 라이브러리만** 쓴다 — 학생 설치에
 테스트는 `uv run --with pytest python -m pytest -q`. 기본 `python3`에는 pytest가 없다.
 
 **seam은 훅 프로세스 하나뿐이다** (stdin 페이로드 → stdout + 저장소 파일).
-검색기·결정기·저장소를 따로 유닛 테스트하지 않는다. 이유는 이슈 #1의 Testing Decisions에 있다.
+관측 검색기·개입 결정기·프로필 저장소를 따로 유닛 테스트하지 않는다. 이유는 이슈 #1의 Testing Decisions에 있다.
 
 ## Agent skills
 
