@@ -86,8 +86,8 @@ Cursor는 per-prompt 컨텍스트 주입이 불가능하므로 지원 대상이 
 ```jsonl
 {"id":"o_8f21","t0":"2026-08-23T14:02Z","t1":"14:15Z",
  "comp":["langgraph/send","python/async"],
- "kind":["asked","implemented","overrode"],
- "text":"병렬 팬아웃에 Send()가 필요하다는 안내를 받은 뒤 리스트 반환과 무엇이 다른지 되물었고, 문서를 참고해 12줄을 직접 작성했으나 4분 뒤 우회를 요청함",
+ "kind":["asked","overrode"],
+ "text":"병렬 팬아웃에 Send()가 필요하다는 안내를 받은 뒤 리스트 반환과 무엇이 다른지 되물었고, 에이전트가 12줄을 반영한 4분 뒤 우회를 요청함",
  "status":"closed","src":["a1@14:02..14:15"]}
 ```
 
