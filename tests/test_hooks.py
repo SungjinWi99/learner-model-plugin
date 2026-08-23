@@ -522,3 +522,44 @@ def test_빈_DEVPROFILE_ROOT는_설정하지_않은_것으로_보고_홈_아래�
     assert "[설계→구현 분리]" in result.stdout
     assert (home / ".devprofile" / "raw").is_dir(), "홈 아래 저장소가 만들어져야 한다"
     assert not (workdir / "raw").exists(), f"작업 디렉터리에 저장소가 생겼다: {list(workdir.iterdir())}"
+
+
+def test_제출_사본_경로는_심볼릭_링크를_풀지_않고_물결도_펼친다(tmp_path):
+    """Path.resolve()는 링크를 실제 위치로 바꾼다. 안내한 경로와 학생이 아는 경로가
+    달라지면 제출 흐름이 헷갈린다(DESIGN §10). ~도 안 펼치면 `~` 디렉터리가 생긴다.
+    """
+    home = tmp_path / "home"
+    real = tmp_path / "real-project"
+    real.mkdir(parents=True)
+    link = tmp_path / "linked-project"
+    link.symlink_to(real, target_is_directory=True)
+
+    _, result = run_hook(tmp_path, "draft-symlink", {
+        "hook_event_name": "UserPromptSubmit", "session_id": "d-1",
+        "prompt": "/devprofile submit draft", "cwd": str(link),
+    }, {**keyword_tagger_env(), "HOME": str(home), "USERPROFILE": str(home)})
+    assert result.returncode == 0, result.stderr
+    assert str(link) in result.stdout, (
+        f"안내된 경로가 링크를 풀어버렸다. 출력: {result.stdout!r}"
+    )
+    assert str(real) not in result.stdout
+    assert (link / "devprofile-submission.md").exists()
+
+
+def test_CLI_제출_사본_경로의_물결이_홈으로_펼쳐진다(tmp_path):
+    home = tmp_path / "cli-home"
+    (home / ".devprofile").mkdir(parents=True)
+    workdir = tmp_path / "cli-project"
+    workdir.mkdir(parents=True)
+    result = subprocess.run(
+        [sys.executable, str(ROOT / "bin" / "devprofile.py"), "submit", "--draft", "~/사본.md"],
+        text=True, capture_output=True, timeout=30, check=False, cwd=str(workdir),
+        env={
+            **os.environ, "HOME": str(home), "USERPROFILE": str(home),
+            "DEVPROFILE_ROOT": str(home / ".devprofile"),
+            "PATH": str(Path(sys.executable).parent), "DEVPROFILE_HOST": "claude",
+        },
+    )
+    assert result.returncode == 0, result.stderr
+    assert (home / "사본.md").exists(), f"홈에 만들어져야 한다. 출력: {result.stdout!r}"
+    assert not (workdir / "~").exists(), "물결이 디렉터리 이름으로 쓰였다"

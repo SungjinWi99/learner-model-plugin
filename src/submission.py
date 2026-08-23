@@ -12,8 +12,19 @@ def configured_form_url():
     return config.get("formUrl")
 
 
+def _user_path(target):
+    """학생이 준 경로를 절대경로로만 만든다. 심볼릭 링크는 풀지 않는다.
+
+    Path.resolve()는 링크를 실제 위치로 바꿔버린다. macOS의 /tmp가 /private/tmp인 것처럼,
+    학생이 안내받는 경로와 학생이 아는 경로가 달라지면 제출 흐름에서 "내 파일이 여기가
+    아닌데?"가 된다. 제출의 마찰은 동의를 진짜로 만들라고 있는 것이지(DESIGN §10)
+    헷갈리라고 있는 게 아니다. ~도 함께 펼친다 — 안 그러면 `~`라는 이름의 디렉터리가 생긴다.
+    """
+    return Path(os.path.abspath(os.path.expanduser(str(target))))
+
+
 def create_draft(target, body):
-    absolute = Path(target).resolve()
+    absolute = _user_path(target)
     with absolute.open("x", encoding="utf-8") as stream:
         stream.write(body)
     return absolute
@@ -50,7 +61,7 @@ def approve_draft(target):
     url = configured_form_url()
     if not url:
         raise RuntimeError("폼 URL이 설정되지 않았습니다. 배포자에게 문의하세요.")
-    body = Path(target).resolve().read_text(encoding="utf-8")
+    body = _user_path(target).read_text(encoding="utf-8")
     _copy_to_clipboard(body)
     _open_form(url)
     return body
