@@ -1,0 +1,21 @@
+{
+  "name": "devprofile",
+  "interface": {
+    "displayName": "DevProfile"
+  },
+  "plugins": [
+    {
+      "name": "devprofile",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/SungjinWi99/learner-model-plugin.git",
+        "ref": "main"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Education"
+    }
+  ]
+}

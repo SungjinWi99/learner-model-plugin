@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "devprofile",
+  "description": "부트캠프 학습자의 관측을 영속적으로 기억하는 코딩 에이전트 계층",
+  "owner": {
+    "name": "SungjinWi99",
+    "url": "https://github.com/SungjinWi99"
+  },
+  "plugins": [
+    {
+      "name": "devprofile",
+      "description": "관측을 근거로 작업마다 개입 형태를 조절합니다.",
+      "source": "./",
+      "category": "education"
+    }
+  ]
+}

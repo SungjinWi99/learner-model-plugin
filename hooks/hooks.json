@@ -1,0 +1,57 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -n \"${PLUGIN_ROOT:-}\" ]; then export DEVPROFILE_HOST=codex; root=\"${PLUGIN_ROOT}\"; else export DEVPROFILE_HOST=claude; root=\"${CLAUDE_PLUGIN_ROOT}\"; fi; python3 \"$root/hooks/devprofile.py\"",
+            "commandWindows": "$root = if ($env:PLUGIN_ROOT) { $env:DEVPROFILE_HOST='codex'; $env:PLUGIN_ROOT } else { $env:DEVPROFILE_HOST='claude'; $env:CLAUDE_PLUGIN_ROOT }; if (Get-Command py -ErrorAction SilentlyContinue) { py -3 \"$root\\hooks\\devprofile.py\" } elseif (Get-Command python3 -ErrorAction SilentlyContinue) { python3 \"$root\\hooks\\devprofile.py\" } elseif (Get-Command python -ErrorAction SilentlyContinue) { python \"$root\\hooks\\devprofile.py\" }",
+            "timeout": 180,
+            "statusMessage": "밀린 관측을 회수하고 학습자 프로필을 불러오는 중..."
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -n \"${PLUGIN_ROOT:-}\" ]; then export DEVPROFILE_HOST=codex; root=\"${PLUGIN_ROOT}\"; else export DEVPROFILE_HOST=claude; root=\"${CLAUDE_PLUGIN_ROOT}\"; fi; python3 \"$root/hooks/devprofile.py\"",
+            "commandWindows": "$root = if ($env:PLUGIN_ROOT) { $env:DEVPROFILE_HOST='codex'; $env:PLUGIN_ROOT } else { $env:DEVPROFILE_HOST='claude'; $env:CLAUDE_PLUGIN_ROOT }; if (Get-Command py -ErrorAction SilentlyContinue) { py -3 \"$root\\hooks\\devprofile.py\" } elseif (Get-Command python3 -ErrorAction SilentlyContinue) { python3 \"$root\\hooks\\devprofile.py\" } elseif (Get-Command python -ErrorAction SilentlyContinue) { python \"$root\\hooks\\devprofile.py\" }",
+            "timeout": 25,
+            "statusMessage": "관련 관측을 찾고 개입 형태를 정하는 중..."
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "^(Write|Edit|apply_patch|Bash)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -n \"${PLUGIN_ROOT:-}\" ]; then export DEVPROFILE_HOST=codex; root=\"${PLUGIN_ROOT}\"; else export DEVPROFILE_HOST=claude; root=\"${CLAUDE_PLUGIN_ROOT}\"; fi; python3 \"$root/hooks/devprofile.py\"",
+            "commandWindows": "$root = if ($env:PLUGIN_ROOT) { $env:DEVPROFILE_HOST='codex'; $env:PLUGIN_ROOT } else { $env:DEVPROFILE_HOST='claude'; $env:CLAUDE_PLUGIN_ROOT }; if (Get-Command py -ErrorAction SilentlyContinue) { py -3 \"$root\\hooks\\devprofile.py\" } elseif (Get-Command python3 -ErrorAction SilentlyContinue) { python3 \"$root\\hooks\\devprofile.py\" } elseif (Get-Command python -ErrorAction SilentlyContinue) { python \"$root\\hooks\\devprofile.py\" }",
+            "timeout": 5,
+            "statusMessage": "파일 쓰기 관측을 기록하는 중..."
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -n \"${PLUGIN_ROOT:-}\" ]; then export DEVPROFILE_HOST=codex; root=\"${PLUGIN_ROOT}\"; else export DEVPROFILE_HOST=claude; root=\"${CLAUDE_PLUGIN_ROOT}\"; fi; python3 \"$root/hooks/devprofile.py\"",
+            "commandWindows": "$root = if ($env:PLUGIN_ROOT) { $env:DEVPROFILE_HOST='codex'; $env:PLUGIN_ROOT } else { $env:DEVPROFILE_HOST='claude'; $env:CLAUDE_PLUGIN_ROOT }; if (Get-Command py -ErrorAction SilentlyContinue) { py -3 \"$root\\hooks\\devprofile.py\" } elseif (Get-Command python3 -ErrorAction SilentlyContinue) { python3 \"$root\\hooks\\devprofile.py\" } elseif (Get-Command python -ErrorAction SilentlyContinue) { python \"$root\\hooks\\devprofile.py\" }",
+            "timeout": 180,
+            "statusMessage": "이번 에피소드에서 관측을 추출하는 중..."
+          }
+        ]
+      }
+    ]
+  }
+}

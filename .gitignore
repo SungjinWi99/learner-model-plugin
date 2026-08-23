@@ -1,0 +1,8 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+uv.lock
+
+# 학생 제출 사본이 프로젝트 안에 만들어진다 (DESIGN §10)
+devprofile-submission.md

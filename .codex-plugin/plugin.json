@@ -1,0 +1,21 @@
+{
+  "name": "devprofile",
+  "version": "0.1.0",
+  "description": "학생의 실제 개발 관측을 기억하고 작업마다 코딩 에이전트의 개입 형태를 조절합니다.",
+  "author": {
+    "name": "SungjinWi99",
+    "url": "https://github.com/SungjinWi99"
+  },
+  "repository": "https://github.com/SungjinWi99/learner-model-plugin",
+  "keywords": ["education", "learning", "hooks", "coding"],
+  "hooks": "./hooks/hooks.json",
+  "interface": {
+    "displayName": "DevProfile",
+    "shortDescription": "개발 관측에 맞춰 개입 형태 조절",
+    "longDescription": "Claude Code와 Codex가 공유하는 학습자 프로필에 실제 개발 관측을 쌓고, 관련 관측에 따라 한 작업의 인지적 분담을 조절합니다.",
+    "developerName": "SungjinWi99",
+    "category": "Education",
+    "capabilities": ["hooks", "학습자 프로필", "개입 조절"],
+    "defaultPrompt": ["내 학습자 프로필을 보여줘.", "이 작업에서 내가 맡을 부분을 정해줘."]
+  }
+}
